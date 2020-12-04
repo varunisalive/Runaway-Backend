@@ -7,6 +7,8 @@ const MongoClient = require("mongodb").MongoClient;
 
 const app = express();
 
+const productsRoutes = require("./routes/productsApi")
+
 var url = "mongodb://localhost:27017/runawayDB";
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('connection', () => {
@@ -18,14 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(morgan('tiny'));
 
-const productsSchema = new mongoose.Schema({
-    imgURL: String,
-    name: String,
-    rating: Number,
-    price: Number
-});
 
-const Product = mongoose.model("Product", productsSchema);
 
 // MongoClient.connect(url, function (err, db) {
 //     if (err) {
@@ -49,20 +44,7 @@ const Product = mongoose.model("Product", productsSchema);
 
 
 
-app.get("/products", function (req, res) {
-
-    Product.find({}, function(err, foundProducts){
-        if(err){
-            console.log(err);
-        } else {
-            if(foundProducts){
-                res.json(foundProducts);
-            } else {
-                console.log("Products not found");
-            }
-        }
-    });
-});
+app.use("/", productsRoutes);
 
 port = process.env.PORT || 8080;
 
