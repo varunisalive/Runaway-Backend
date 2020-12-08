@@ -7,7 +7,8 @@ const MongoClient = require("mongodb").MongoClient;
 
 const app = express();
 
-const productsRoutes = require("./routes/productsApi")
+const productsRoutes = require("./routes/productsApi");
+const Product = require("./models/products");
 
 var url = "mongodb://localhost:27017/runawayDB";
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -45,6 +46,23 @@ app.use(morgan('tiny'));
 
 
 app.use("/", productsRoutes);
+
+app.get("/products/:id", function(req, res){
+
+    const productId = req.params.id;
+
+    Product.find({_id: productId}, function(err, foundProduct){
+        if(err) {
+            console.log(err)
+        } else {
+            if(foundProduct){
+                res.json(foundProduct);
+            } else {
+                console.log("Product not found");
+            }
+        }
+    })
+});
 
 port = process.env.PORT || 8080;
 
