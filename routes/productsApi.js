@@ -4,7 +4,7 @@ const Product = require("../models/products.js");
 const router = express.Router();
 
 //routes
-router.get("/products", function (req, res) {
+router.get("/products", (req, res) => {
 
 Product.find({}, function(err, foundProducts){
     if(err){
