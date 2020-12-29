@@ -58,7 +58,7 @@ app.use(morgan('tiny'));
 app.use("/", productsRoutes);
 app.use("/user", userRoutes);
 
-app.get("/products/:id", (req, res) => {
+app.get("/products/:prodId", (req, res) => {
 
     const productId =  req.params.id;
 

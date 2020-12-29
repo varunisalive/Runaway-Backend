@@ -19,6 +19,7 @@ const signToken = userID => {
 userRouter.post("/register", (req, res) => {
     const {
         username,
+        email,
         password,
         role
     } = req.body;
@@ -43,6 +44,7 @@ userRouter.post("/register", (req, res) => {
         } else {
             const newUser = new User({
                 username,
+                email,
                 password,
                 role
             });
