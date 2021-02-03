@@ -10,6 +10,7 @@ const app = express();
 
 const productsRoutes = require("./routes/productsApi");
 const userRoutes = require("./routes/User");
+const indiProductsRouter = require("./routes/IndiProductsApi");
 
 const Product = require("./models/products");
 const User = require("./models/Users");
@@ -54,26 +55,11 @@ app.use(morgan('tiny'));
 
 
 
-
-app.use("/", productsRoutes);
 app.use("/user", userRoutes);
+app.use("/", productsRoutes);
+app.use("/", indiProductsRouter);
 
-app.get("/products/:prodId", (req, res) => {
 
-    const productId =  req.params.id;
-
-    Product.find({_id: productId}, function(err, foundProduct){
-        if(err) {
-            console.log(err)
-        } else {
-            if(foundProduct){
-                res.json(foundProduct);
-            } else {
-                console.log("Product not found");
-            }
-        }
-    })
-});
 
 port = process.env.PORT || 8080;
 
